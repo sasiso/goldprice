@@ -4,7 +4,7 @@ import tkinter as tk
 def get_gold_price():
     url = 'https://api.metalpriceapi.com/v1/latest'
     params = {
-        'api_key': '9140e2d186d86ea1634db72f98a661a7',
+        'api_key': '28bfccd0511e2e68787aa67db908a605',
         'base': 'XAU',
         'currencies': 'AUD'
     }
@@ -48,7 +48,7 @@ class App:
         price = get_gold_price()
         if price is not None:
             self.label.config(text=f'{price:04d}')
-        self.master.after(30000, self.update_price)
+        self.master.after(3600000, self.update_price)
 
     def on_faded(self, event=None):
         if not self.faded:
