@@ -3,11 +3,11 @@ name: Build Windows Executable
 on:
   push:
     branches:
-      - main  # Adjust to your default branch
+      - main
 
 jobs:
   build:
-    runs-on: ubuntu-latest  # GitHub Actions runner for Ubuntu
+    runs-on: windows-latest  # Use a Windows runner
 
     steps:
       - name: Checkout code
@@ -16,7 +16,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.x  # Specify the Python version you need
+          python-version: 3.x
 
       - name: Install dependencies
         run: |
@@ -30,8 +30,13 @@ jobs:
           pyinstaller --onefile main.py
         working-directory: ${{ github.workspace }}
 
+      - name: Rename Executable
+        run: |
+          move dist\main.exe dist\goldprice.exe
+        working-directory: ${{ github.workspace }}
+
       - name: Upload Windows Executable
         uses: actions/upload-artifact@v2
         with:
           name: windows-executable
-          path: dist/main
+          path: dist/goldprice.exe
