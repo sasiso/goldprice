@@ -1,0 +1,37 @@
+name: Build Windows Executable
+
+on:
+  push:
+    branches:
+      - main  # Adjust to your default branch
+
+jobs:
+  build:
+    runs-on: ubuntu-latest  # GitHub Actions runner for Ubuntu
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x  # Specify the Python version you need
+
+      - name: Install dependencies
+        run: |
+          pip install pyinstaller
+          pip install requests
+          # Additional dependencies if needed
+          # pip install package_name
+
+      - name: Build Windows Executable
+        run: |
+          pyinstaller --onefile main.py
+        working-directory: ${{ github.workspace }}
+
+      - name: Upload Windows Executable
+        uses: actions/upload-artifact@v2
+        with:
+          name: windows-executable
+          path: dist/main.exe
